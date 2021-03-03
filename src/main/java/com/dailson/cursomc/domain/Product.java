@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import lombok.AccessLevel;
@@ -16,16 +18,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 //@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+//@ToString
 @Data
 
 @Entity
-public class Category implements Serializable {
+public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,8 +36,11 @@ public class Category implements Serializable {
 
 	private String name;
 
-	@ManyToMany(mappedBy = "categories")
+	private Double price;
+
+	@ManyToMany
+	@JoinTable(name = "Product_Category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	@Setter(value = AccessLevel.NONE)
-	private final List<Product> products = new ArrayList<>();
+	private final List<Category> categories = new ArrayList<>();
 
 }
