@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +42,7 @@ public class Product implements Serializable {
 
 	@ManyToMany
 	@JoinTable(name = "Product_Category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JsonBackReference
 	@Setter(value = AccessLevel.NONE)
 	private final List<Category> categories = new ArrayList<>();
 
