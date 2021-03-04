@@ -8,25 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-//@ToString
 @Data
-
 @Entity
-public class Category implements Serializable {
+public class State implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,10 +31,9 @@ public class Category implements Serializable {
 	private Integer id;
 
 	private String name;
-
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categories")
+	
+	@OneToMany(mappedBy = "state")
 	@Setter(value = AccessLevel.NONE)
-	private final List<Product> products = new ArrayList<>();
-
+	@Getter
+	private static List<City> cities = new ArrayList<>();
 }

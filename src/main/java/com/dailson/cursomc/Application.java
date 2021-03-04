@@ -8,9 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.dailson.cursomc.domain.Category;
+import com.dailson.cursomc.domain.City;
 import com.dailson.cursomc.domain.Product;
+import com.dailson.cursomc.domain.State;
 import com.dailson.cursomc.repositories.CategoryRepository;
+import com.dailson.cursomc.repositories.CityRepository;
 import com.dailson.cursomc.repositories.ProductRepository;
+import com.dailson.cursomc.repositories.StateRepository;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -21,6 +25,12 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private CityRepository cityRepository;
+	
+	@Autowired
+	private StateRepository stateRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -44,6 +54,20 @@ public class Application implements CommandLineRunner {
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		State est1 = new State(null, "Minas Gerais");
+		State est2 = new State(null, "São Paulo");
+		
+		City c1 = new City(null, "Uberlância", est1);
+		City c2 = new City(null, "São Paulo", est2);
+		City c3  = new City(null, "Capinas", est2);
+		
+		est1.getCities().addAll(Arrays.asList(c1));
+		est2.getCities().addAll(Arrays.asList(c2, c3));
+		
+		
+		stateRepository.saveAll(Arrays.asList(est1, est2));
+		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 	}
 
 }
