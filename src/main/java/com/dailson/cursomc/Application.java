@@ -79,7 +79,7 @@ public class Application implements CommandLineRunner {
 		
 		stateRepository.saveAll(Arrays.asList(est1, est2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
-		
+
 		Client cli1 = new Client(null, "Maria", "maria@gmail.com", "12345678901", ClientType.NATURAL_PERSON);
 		cli1.getTelephones().addAll(Arrays.asList("000111","000222"));
 		

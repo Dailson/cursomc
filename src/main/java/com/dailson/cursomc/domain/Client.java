@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.dailson.cursomc.domain.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,7 @@ public class Client implements Serializable{
 	
 	private Integer clientType;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "client")
 	private final List<Address> addresses = new ArrayList<>();
 	
