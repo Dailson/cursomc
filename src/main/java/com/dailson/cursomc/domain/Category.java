@@ -12,19 +12,14 @@ import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-//@ToString
 @Data
-
 @Entity
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,7 +33,6 @@ public class Category implements Serializable {
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "categories")
-	@Setter(value = AccessLevel.NONE)
 	private final List<Product> products = new ArrayList<>();
 
 }

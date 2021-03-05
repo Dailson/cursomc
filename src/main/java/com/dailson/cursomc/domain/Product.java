@@ -14,19 +14,14 @@ import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-//@ToString
 @Data
-
 @Entity
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +38,6 @@ public class Product implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "Product_Category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	@JsonBackReference
-	@Setter(value = AccessLevel.NONE)
 	private final List<Category> categories = new ArrayList<>();
 
 }

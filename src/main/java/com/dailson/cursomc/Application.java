@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.dailson.cursomc.domain.Address;
 import com.dailson.cursomc.domain.Category;
 import com.dailson.cursomc.domain.City;
+import com.dailson.cursomc.domain.Client;
 import com.dailson.cursomc.domain.Product;
 import com.dailson.cursomc.domain.State;
+import com.dailson.cursomc.domain.enums.ClientType;
+import com.dailson.cursomc.repositories.AddressRepository;
 import com.dailson.cursomc.repositories.CategoryRepository;
 import com.dailson.cursomc.repositories.CityRepository;
+import com.dailson.cursomc.repositories.ClientRepository;
 import com.dailson.cursomc.repositories.ProductRepository;
 import com.dailson.cursomc.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private StateRepository stateRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -68,6 +79,17 @@ public class Application implements CommandLineRunner {
 		
 		stateRepository.saveAll(Arrays.asList(est1, est2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		Client cli1 = new Client(null, "Maria", "maria@gmail.com", "12345678901", ClientType.NATURAL_PERSON);
+		cli1.getTelephones().addAll(Arrays.asList("000111","000222"));
+		
+		Address add1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim","3822084", cli1, c1);
+		Address add2 = new Address(null, "Avenida Matos", "105", "sala 800", "Centro","38777012", cli1, c2);
+		
+		cli1.getAddresses().addAll(Arrays.asList(add1, add2));
+		
+		clientRepository.saveAll(Arrays.asList(cli1));
+		addressRepository.saveAll(Arrays.asList(add1, add2));
 	}
 
 }

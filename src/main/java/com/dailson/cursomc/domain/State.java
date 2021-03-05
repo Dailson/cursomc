@@ -10,13 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +30,5 @@ public class State implements Serializable {
 	private String name;
 	
 	@OneToMany(mappedBy = "state")
-	@Setter(value = AccessLevel.NONE)
-	@Getter
-	private static List<City> cities = new ArrayList<>();
+	private final List<City> cities = new ArrayList<>();
 }

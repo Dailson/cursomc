@@ -18,17 +18,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class City implements Serializable {
+public class Address implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Integer id;
-
-	private String name;
-
+	
+	private String street;
+	
+	private String number;
+	
+	private String complement;
+	
+	private String district;
+	
+	private String postCode;
+	
+	
 	@ManyToOne
-	@JoinColumn(name = "state_id")
-	private State state;
+	@JoinColumn(name = "client_id")
+	private Client client;
+	
+	@ManyToOne
+	@JoinColumn(name = "city_id")
+	private City city;
 }
