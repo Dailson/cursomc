@@ -1,5 +1,6 @@
 package com.dailson.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.dailson.cursomc.domain.Address;
 import com.dailson.cursomc.domain.Category;
 import com.dailson.cursomc.domain.City;
 import com.dailson.cursomc.domain.Client;
+import com.dailson.cursomc.domain.Demand;
+import com.dailson.cursomc.domain.Payment;
+import com.dailson.cursomc.domain.PaymentBoleto;
+import com.dailson.cursomc.domain.PaymentCard;
 import com.dailson.cursomc.domain.Product;
 import com.dailson.cursomc.domain.State;
 import com.dailson.cursomc.domain.enums.ClientType;
+import com.dailson.cursomc.domain.enums.PaymentStatus;
 import com.dailson.cursomc.repositories.AddressRepository;
 import com.dailson.cursomc.repositories.CategoryRepository;
 import com.dailson.cursomc.repositories.CityRepository;
 import com.dailson.cursomc.repositories.ClientRepository;
+import com.dailson.cursomc.repositories.DemandRepository;
+import com.dailson.cursomc.repositories.PaymentRepository;
 import com.dailson.cursomc.repositories.ProductRepository;
 import com.dailson.cursomc.repositories.StateRepository;
 
@@ -41,6 +49,12 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private DemandRepository demandRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -90,6 +104,21 @@ public class Application implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(add1, add2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Demand dm1 = new Demand(null, sdf.parse("06/03/2021 16:52"),cli1, add1);
+		Demand dm2 = new Demand(null, sdf.parse("10/02/2021 10:0"),cli1, add2);
+		
+		Payment paym1 = new PaymentCard(null, PaymentStatus.SETTLED , dm1, 6);
+		dm1.setPayment(paym1);
+		
+		Payment paym2 = new PaymentBoleto(null, PaymentStatus.PENDING, dm2, sdf.parse("11/01/2020 10:59"), null);
+		dm2.setPayment(paym2);
+		
+		cli1.getDemands().addAll(Arrays.asList(dm1, dm2));
+		
+		demandRepository.saveAll(Arrays.asList(dm1, dm2));
+		paymentRepository.saveAll(Arrays.asList(paym1, paym2));
 	}
 
 }

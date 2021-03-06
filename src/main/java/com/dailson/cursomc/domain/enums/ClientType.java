@@ -9,16 +9,16 @@ public enum ClientType {
 	LEGAL_PERSON(2, "Legal Person");
 
 	
-	
-	private ClientType(int cod, String description) {
-		this.cod = cod;
-		this.description = description;
-	}
 	@Getter
 	private int cod;
 	
 	@Getter
 	private String description;
+	
+	private ClientType(int cod, String description) {
+		this.cod = cod;
+		this.description = description;
+	}
 	
 	
 	public static ClientType toEnum(Integer cod) {

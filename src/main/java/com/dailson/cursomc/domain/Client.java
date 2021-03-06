@@ -50,6 +50,11 @@ public class Client implements Serializable{
 	@CollectionTable(name = "TELEPHONE")
 	private final Set<String> telephones = new HashSet<>();
 	
+	@OneToMany(mappedBy = "client")
+	private final List<Demand> demands = new ArrayList<>();
+	
+	
+	
 	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
 		this.id = id;
 		this.name = name;
