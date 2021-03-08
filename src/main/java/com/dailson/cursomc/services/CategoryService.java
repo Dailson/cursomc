@@ -1,5 +1,6 @@
 package com.dailson.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,17 @@ public class CategoryService {
 
 	public void delete(Integer id) {
 		find(id);
-		
-		try {			
+
+		try {
 			repo.deleteById(id);
-		}catch(DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("It's no possible to delete a Category which has Product");
 		}
+
+	}
+
+	public List<Category> findAll() {
+		return repo.findAll();
 
 	}
 
