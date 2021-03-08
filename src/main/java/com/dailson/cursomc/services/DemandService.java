@@ -15,7 +15,7 @@ public class DemandService {
 	@Autowired
 	private DemandRepository repo;
 	
-	public Demand search(Integer id) {
+	public Demand find(Integer id) {
 		Optional<Demand> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"The object was not found! Id: " + id + " type: " + Demand.class.getName()));
