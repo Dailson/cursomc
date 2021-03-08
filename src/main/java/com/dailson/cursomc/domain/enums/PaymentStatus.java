@@ -3,7 +3,9 @@ package com.dailson.cursomc.domain.enums;
 import lombok.Getter;
 
 public enum PaymentStatus {
-	PENDING(1, "Pending"), SETTLED(2, "Settled"), CANCELED(3, "Canceled");
+	PENDING(1, "Pending"),
+	SETTLED(2, "Settled"),
+	CANCELED(3, "Canceled");
 
 	@Getter
 	private int cod;

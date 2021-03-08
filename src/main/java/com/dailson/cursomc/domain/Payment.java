@@ -11,34 +11,28 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.dailson.cursomc.domain.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Data
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@EqualsAndHashCode.Include
 	private Integer id;
 
 	private Integer status;
 
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "demand_id")
 	@MapsId
 	private Demand demand;
 
 	public Payment(Integer id, PaymentStatus status, Demand demand) {
-		super();
 		this.id = id;
 		this.status = status.getCod();
 		this.demand = demand;
@@ -51,4 +45,41 @@ public abstract class Payment implements Serializable {
 	public void setStatus(PaymentStatus paymentStatus) {
 		this.status = paymentStatus.getCod();
 	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the demand
+	 */
+	public Demand getDemand() {
+		return demand;
+	}
+
+	/**
+	 * @param demand the demand to set
+	 */
+	public void setDemand(Demand demand) {
+		this.demand = demand;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	
 }

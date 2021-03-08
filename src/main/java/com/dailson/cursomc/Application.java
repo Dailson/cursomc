@@ -13,6 +13,7 @@ import com.dailson.cursomc.domain.Category;
 import com.dailson.cursomc.domain.City;
 import com.dailson.cursomc.domain.Client;
 import com.dailson.cursomc.domain.Demand;
+import com.dailson.cursomc.domain.ItemDemand;
 import com.dailson.cursomc.domain.Payment;
 import com.dailson.cursomc.domain.PaymentBoleto;
 import com.dailson.cursomc.domain.PaymentCard;
@@ -25,6 +26,7 @@ import com.dailson.cursomc.repositories.CategoryRepository;
 import com.dailson.cursomc.repositories.CityRepository;
 import com.dailson.cursomc.repositories.ClientRepository;
 import com.dailson.cursomc.repositories.DemandRepository;
+import com.dailson.cursomc.repositories.ItemDemanRepository;
 import com.dailson.cursomc.repositories.PaymentRepository;
 import com.dailson.cursomc.repositories.ProductRepository;
 import com.dailson.cursomc.repositories.StateRepository;
@@ -55,6 +57,9 @@ public class Application implements CommandLineRunner {
 	
 	@Autowired
 	private DemandRepository demandRepository;
+	
+	@Autowired
+	private ItemDemanRepository itemDemanRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -119,6 +124,19 @@ public class Application implements CommandLineRunner {
 		
 		demandRepository.saveAll(Arrays.asList(dm1, dm2));
 		paymentRepository.saveAll(Arrays.asList(paym1, paym2));
+		
+		ItemDemand id1 = new ItemDemand(dm1, p1, 0.0, 1, 2000.00);
+		ItemDemand id2 = new ItemDemand(dm1, p3, 0.0, 2, 80.00);
+		ItemDemand id3 = new ItemDemand(dm2, p2, 100.00, 1, 800.00);
+		
+		dm1.getItens().addAll(Arrays.asList(id1, id2));
+		dm2.getItens().addAll(Arrays.asList(id3));
+		
+		p1.getItens().addAll(Arrays.asList(id1));
+		p2.getItens().addAll(Arrays.asList(id3));
+		p3.getItens().addAll(Arrays.asList(id2));
+		
+		itemDemanRepository.saveAll(Arrays.asList(id1, id2, id3));
 	}
 
 }
