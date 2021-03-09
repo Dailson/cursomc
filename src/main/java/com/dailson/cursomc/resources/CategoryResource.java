@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import com.dailson.cursomc.domain.Category;
 import com.dailson.cursomc.dto.CategoryDTO;
 import com.dailson.cursomc.services.CategoryService;
 
+
+
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
@@ -33,7 +37,8 @@ public class CategoryResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Category obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDTO) {
+		Category obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
@@ -41,7 +46,8 @@ public class CategoryResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Category obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDTO, @PathVariable Integer id) {
+		Category obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
