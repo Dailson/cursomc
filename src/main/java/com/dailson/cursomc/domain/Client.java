@@ -53,7 +53,7 @@ public class Client implements Serializable{
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
-		this.clientType = clientType.getCod();
+		this.clientType = (clientType == null) ? null : clientType.getCod();
 	}
 	
 	
